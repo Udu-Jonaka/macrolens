@@ -30,7 +30,8 @@
     "plugins": [
       "expo-secure-store",
       "expo-router",
-      "expo-notifications"
+      "expo-notifications",
+      "expo-font"
     ],
     "extra": {
       "router": {},
