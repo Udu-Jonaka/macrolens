@@ -31,7 +31,19 @@
       "expo-secure-store",
       "expo-router",
       "expo-notifications",
-      "expo-font"
+      "expo-font",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow MacroLens to access your camera to log meals."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow MacroLens to access your photos to log meals."
+        }
+      ]
     ],
     "extra": {
       "router": {},
