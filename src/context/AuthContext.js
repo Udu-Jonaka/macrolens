@@ -66,10 +66,21 @@ export const AuthProvider = ({ children }) => {
       await SecureStore.setItemAsync("userData", JSON.stringify(userData));
       setUser(userData);
     } catch (error) {
-      Alert.alert(
-        "Login Failed",
-        error.response?.data?.error || "An error occurred",
-      );
+      if (error.response?.data?.needsVerification) {
+        Alert.alert(
+          "Unverified Account",
+          "Please verify your email to log in.",
+          [
+            { text: "Verify Now", onPress: () => router.replace({ pathname: "/verify", params: { email } }) },
+            { text: "Cancel", style: "cancel" }
+          ]
+        );
+      } else {
+        Alert.alert(
+          "Login Failed",
+          error.response?.data?.error || "An error occurred",
+        );
+      }
       throw error;
     }
   };
@@ -81,10 +92,21 @@ export const AuthProvider = ({ children }) => {
       // Navigate to the verify screen with the user's email
       router.replace({ pathname: "/verify", params: { email: profileData.email } });
     } catch (error) {
-      Alert.alert(
-        "Registration Failed",
-        error.response?.data?.error || "An error occurred",
-      );
+      if (error.response?.data?.needsVerification) {
+        Alert.alert(
+          "Unverified Account",
+          "This email is registered but not verified.",
+          [
+            { text: "Verify Now", onPress: () => router.replace({ pathname: "/verify", params: { email: profileData.email } }) },
+            { text: "Cancel", style: "cancel" }
+          ]
+        );
+      } else {
+        Alert.alert(
+          "Registration Failed",
+          error.response?.data?.error || "An error occurred",
+        );
+      }
       throw error;
     }
   };
